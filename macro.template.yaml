@@ -1,0 +1,26 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  Transform:
+    Type: AWS::CloudFormation::Macro
+    Properties:
+      Name: SimpleTransform
+      FunctionName: !GetAtt MacroFunction.Arn
+
+  Permissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt MacroFunction.Arn
+      Principal: 'cloudformation.amazonaws.com'
+
+  MacroFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.7
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole

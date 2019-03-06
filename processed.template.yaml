@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MacroFunction:
+    Properties:
+      CodeUri: s3://r1s-deveast-lambda/cd8f179eb4b3b2ba5424a19982ca9c06
+      Handler: index.handler
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      Runtime: python3.7
+      Timeout: 30
+    Type: AWS::Serverless::Function
+  Permissions:
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - MacroFunction
+        - Arn
+      Principal: cloudformation.amazonaws.com
+    Type: AWS::Lambda::Permission
+  Transform:
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+        - MacroFunction
+        - Arn
+      Name: SimpleTransform
+    Type: AWS::CloudFormation::Macro
+Transform: AWS::Serverless-2016-10-31

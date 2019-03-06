@@ -1,0 +1,22 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+   Simple transform template.
+
+Parameters:
+  TransformString:
+    Type: String
+    Default: 'pk'
+
+
+Resources:
+  Table:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      'Fn::Transform':
+        - Name: SimpleTransform
+      AttributeDefinitions:                # required, list of AttributeDefinition
+        - AttributeDefinition
+      KeySchema:                # required, list of KeySchema
+        - KeySchema
